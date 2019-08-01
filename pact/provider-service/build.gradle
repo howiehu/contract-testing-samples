@@ -8,6 +8,7 @@ apply plugin: 'io.spring.dependency-management'
 group = 'study.huhao.demo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 configurations {
     developmentOnly
