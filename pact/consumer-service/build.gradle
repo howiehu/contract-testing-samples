@@ -34,3 +34,7 @@ dependencies {
     testImplementation 'au.com.dius:pact-jvm-consumer-junit_2.12:3.6.12'
     testImplementation 'au.com.dius:pact-jvm-consumer-java8_2.12:3.6.12'
 }
+
+test {
+    systemProperties['pact.rootDir'] = "../pacts"
+}

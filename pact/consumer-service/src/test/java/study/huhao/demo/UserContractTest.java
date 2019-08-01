@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@PactFolder("")
 public class UserContractTest {
 
     @Rule
