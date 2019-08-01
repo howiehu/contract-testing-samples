@@ -1,7 +1,6 @@
 package study.huhao.demo;
 
 import au.com.dius.pact.consumer.Pact;
-import au.com.dius.pact.consumer.PactFolder;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
 import au.com.dius.pact.consumer.PactVerification;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
@@ -20,12 +19,12 @@ import static org.junit.Assert.assertEquals;
 public class UserContractTest {
 
     @Rule
-    public PactProviderRuleMk2 mockProvider = new PactProviderRuleMk2("provider_service", this);
+    public PactProviderRuleMk2 mockProvider = new PactProviderRuleMk2("provider-service", this);
 
-    @Pact(consumer = "user_consumer")
+    @Pact(consumer = "consumer-service")
     public RequestResponsePact createFragment(PactDslWithProvider builder) {
         return builder
-                .uponReceiving("get user request")
+                .uponReceiving("get user with id 1")
                 .path("/users/1")
                 .method("GET")
                 .willRespondWith()
@@ -41,6 +40,9 @@ public class UserContractTest {
     @Test
     @PactVerification
     public void runTest() {
-        assertEquals(new UserClient(mockProvider.getUrl()).getUserById(1).getName(), "Alex");
+        User user = new UserClient(mockProvider.getUrl()).getUserById(1);
+        assertEquals(user.getId(), 1);
+        assertEquals(user.getName(), "Alex");
+        assertEquals(user.getAge(), 10);
     }
 }
