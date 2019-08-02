@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id "au.com.dius.pact" version "3.6.12"
     id 'java'
 }
 
@@ -33,4 +34,9 @@ dependencies {
 
     testImplementation 'au.com.dius:pact-jvm-provider-junit_2.12:3.6.12'
     testImplementation 'au.com.dius:pact-jvm-provider-spring_2.12:3.6.12'
+}
+
+test {
+    systemProperties['pactbroker.host'] = "localhost"
+    systemProperties['pactbroker.port'] = "8089"
 }

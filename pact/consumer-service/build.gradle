@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.1.6.RELEASE'
+    id "au.com.dius.pact" version "3.6.12"
     id 'java'
 }
 
@@ -37,4 +38,11 @@ dependencies {
 
 test {
     systemProperties['pact.rootDir'] = "../pacts"
+}
+
+pact {
+    publish {
+        pactDirectory = '../pacts'
+        pactBrokerUrl = 'http://localhost:8089'
+    }
 }
