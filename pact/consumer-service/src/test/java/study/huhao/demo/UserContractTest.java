@@ -24,7 +24,8 @@ public class UserContractTest {
     @Pact(consumer = "consumer-service")
     public RequestResponsePact createFragment(PactDslWithProvider builder) {
         return builder
-                .uponReceiving("get user with id 1")
+                .given("an user with id 1 exists")
+                .uponReceiving("a request for an user")
                 .path("/users/1")
                 .method("GET")
                 .willRespondWith()
