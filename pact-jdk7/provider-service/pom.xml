@@ -37,14 +37,14 @@
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-provider-junit_2.11</artifactId>
-            <version>3.5.7-jre7.0</version>
+            <version>3.5.2-jre7.0</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>au.com.dius</groupId>
             <artifactId>pact-jvm-provider-spring_2.11</artifactId>
-            <version>3.5.7-jre7.0</version>
+            <version>3.5.2-jre7.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -63,17 +63,33 @@
             </plugin>
 
             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>pactbroker.host</name>
+                            <value>localhost</value>
+                        </property>
+                        <property>
+                            <name>pactbroker.port</name>
+                            <value>8089</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>ProviderServiceApplication</mainClass>
+                    <mainClass>study.huhao.demo.ProviderServiceApplication</mainClass>
                 </configuration>
             </plugin>
 
             <plugin>
                 <groupId>au.com.dius</groupId>
                 <artifactId>pact-jvm-provider-maven_2.11</artifactId>
-                <version>3.5.7-jre7.0</version>
+                <version>3.5.2-jre7.0</version>
             </plugin>
         </plugins>
     </build>

@@ -1,32 +1,43 @@
 package study.huhao.demo;
 
 import au.com.dius.pact.provider.junit.Provider;
+import au.com.dius.pact.provider.junit.RestPactRunner;
 import au.com.dius.pact.provider.junit.State;
 import au.com.dius.pact.provider.junit.loader.PactBroker;
-import au.com.dius.pact.provider.junit.target.HttpTarget;
-import au.com.dius.pact.provider.junit.target.Target;
 import au.com.dius.pact.provider.junit.target.TestTarget;
-import au.com.dius.pact.provider.spring.SpringRestPactRunner;
+import au.com.dius.pact.provider.spring.target.MockMvcTarget;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-@RunWith(SpringRestPactRunner.class)
+import static org.mockito.Mockito.when;
+
+@RunWith(RestPactRunner.class)
 @Provider("provider-service-jdk7")
 @PactBroker(host = "${pactbroker.host:localhost}", port = "${pactbroker.port:8089}")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ContractTest {
 
-    @LocalServerPort
-    private int port;
+    @Mock
+    private UserRepository userRepository;
+
+    @InjectMocks
+    private UserApi userApi;
 
     @TestTarget
-    public final Target target = new HttpTarget(port);
+    public final MockMvcTarget target = new MockMvcTarget();
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        target.setControllers(userApi);
+    }
 
     @Test
     @State("an user with id 1 exists")
     public void userExists() {
-
+        when(userRepository.getById(1)).thenReturn(new User(1, "Alex", 10));
     }
 }
